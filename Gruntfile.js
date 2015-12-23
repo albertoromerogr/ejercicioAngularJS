@@ -8,6 +8,8 @@
 // 'test/spec/**/*.js'
 
 module.exports = function (grunt) {
+  grunt.loadNpmTasks('grunt-contrib-sass');
+  grunt.loadNpmTasks('grunt-contrib-watch');
 
   // Time how long tasks take. Can help when optimizing build times
   require('time-grunt')(grunt);
@@ -31,11 +33,11 @@ module.exports = function (grunt) {
     // Project settings
     yeoman: appConfig,
 
-
+      //Una vez ajustado, renombrar main_sass.css a main.css
       sass: {
         dist: {
           files: {
-            'style/style.css' : 'sass/style.scss'
+            '<%= yeoman.app %>/styles/main_sass.css' : '<%= yeoman.app %>/sass/main.scss'
           }
         }
       },
@@ -446,10 +448,11 @@ module.exports = function (grunt) {
     grunt.task.run([
       'clean:server',
       'wiredep',
+      'sass',
       'concurrent:server',
       'postcss:server',
       'connect:livereload',
-      'watch'
+      'watch',
     ]);
   });
 
@@ -492,8 +495,7 @@ module.exports = function (grunt) {
     'build'
   ]);
 
-  grunt.loadNpmTasks('grunt-contrib-sass');
-  grunt.loadNpmTasks('grunt-contrib-watch');
+
   grunt.registerTask('default',['watch']);
   grunt.registerTask('dev',['sass','jshint']);
 
